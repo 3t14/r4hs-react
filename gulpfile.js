@@ -8,11 +8,10 @@ var uglify = require('gulp-uglify');
 
 gulp.task('react', function() {
   browserify({
-    entries: ["jsx/app.jsx"], 
+    entries: ["./jsx/App.jsx"], // for main application source code 
     debug: true, // output sourcemap for Chrome
-    transform: ['reactify', 'babelify']
-  })
-  .bundle()
+    transform:  ['babelify'] // ['reactify', 'babelify'] when use babel-preset-react, not reactify
+  }).bundle()
   .on('error', console.error.bind(console)) // Don't stop even at compile error
   .pipe(source("app.js")) // file name
   .pipe(buffer()) // for sourcemaps
@@ -23,6 +22,27 @@ gulp.task('react', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('jsx/app.jsx', ['react']);  
+  gulp.watch('jsx/*.jsx', ['react']);  
 });
+
+
 gulp.task('default', ['react', 'watch']);
+
+
+// ビルド短縮用
+gulp.task('react-fast', function() {
+  browserify({
+    entries: ["./jsx/App.jsx"], 
+    debug: false, //  for faster process
+    transform:  ['babelify'] // ['reactify', 'babelify'] when use babel-preset-react, not reactify
+  }).bundle()
+  .on('error', console.error.bind(console)) // Don't stop even at compile error
+  .pipe(source("app.js")) // file name
+  .pipe(gulp.dest("js/")); // output path
+});
+
+gulp.task('watch-fast', function() {
+  gulp.watch('jsx/*.jsx', ['react-fast']);  
+});
+
+gulp.task('fast', ['react-fast', 'watch-fast'])
