@@ -77,9 +77,9 @@ class Log {
 }
 
 // ログ出力しない場合 
-//let log = new Log();
-//
-let log = new Log(console);
+let log = new Log();
+// ログを出力する場合
+//let log = new Log(console);
 
 export default log;
 
