@@ -18,3 +18,11 @@ Then, install the gulp like:
 $ sudo npm install gulp -g
 ```
 
+
+# How to build
+
+Just launch gulp and the process continues to watch the difference of files. If a file is updated, the file will be compiled automatically.
+```
+$ gulp
+```
+
