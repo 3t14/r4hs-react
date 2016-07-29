@@ -11,8 +11,6 @@ log.outputFlag = true; // ログ出力する設定
  */ 
 class App extends React.Component{
   constructor() {
-    log.fb();
-    
     super(); 
 
     // class定義において、getInitStateは利用禁止になっている
@@ -23,57 +21,46 @@ class App extends React.Component{
     // 関数内でのthisの意味をAppに対応させる(ES6用に対応)
     this.onResize = this.onResize.bind(this);
     
-    log.fe();
   } 
    
   onResize(){
-    log.fb();
-    
-    log.d(`Log count = ${log.count}`);
     // 定義されていない場合は何もしない
     if (this.app == undefined) {
       log.d('this.app == undefined');
       return;
     }
+    // this.app (仮想DOM)から実際のDOMを取得
     let appElem = ReactDOM.findDOMNode(this.app);
+    // 要素のサイズを取得
     let clientWidth = appElem.clientWidth;
     let clientHeight = appElem.clientHeight;
     log.d(`Resize to (${clientWidth},${clientHeight})`);
+    
+    // stateの値の変更は必ずsetStateを用いること！
+    // これによって、renderが再び呼び出される
     this.setState({width: clientWidth, height: clientHeight});
     
-    log.fe();
   }
 
   componentDidMount() {
-    log.fb();
-    
     this.onResize();
     // ウィンドウサイズ変更イベントのキャッチする
     window.addEventListener('resize', this.onResize);
-    
-    log.fe();
   }
 
   componentWillUnmount() {
-    log.fb();
     // ウィンドウサイズ変更イベントのリスナーを解除する
     window.removeEventListener('resize', this.onResize);
-    log.fe();
   }
   
   render(){
-    log.fb();
-    
-    log.fe();
     return (
       <div ref={
         (app) => {
-          log.d(`App:render ref = ${app}`);
-          // app = undefindedのケース対策
-          if (app != undefined) this.app = app; 
+          this.app = app; 
         }}>
         <div style={{border:'solid 1px'}}>
-          test test 
+          [width, height] = [{this.state.width}, {this.state.height}]
         </div>
       </div>
       );

@@ -30,8 +30,9 @@ class Log {
     let stack = e.stack;
     let stackArray = stack.split('\n');
     let lines = stackArray[2].split(' ');
-    console.debug(lines[5] == 'new' ? lines[5]+' '+lines[6] : lines[5]);
     console.group();
+    console.debug(lines[5] == 'new' ? lines[5]+' '+lines[6] : lines[5]);
+
   }
 
   /**
