@@ -7,6 +7,15 @@ class Log {
     // no output if console is undefined
     this.console = console;
     this.count = 0;
+    this._outputFlag = false;
+  }
+  
+  get outputFlag() {
+    return this._outputFlag;
+  }
+  
+  set outputFlag(value) {
+    this._outputFlag = value;
   }
   
   /**
@@ -14,8 +23,9 @@ class Log {
    * 各メソッドの最初に記入してください。
    */
   fb(){
-    if (this.console == undefined) return;
+    if (this.console == undefined || this._outputFlag == false) return;
     // 引数なしの場合、ファイル名＋関数名を自動出力
+    // 現在はChromeのみの対応
     let e = new Error();
     let stack = e.stack;
     let stackArray = stack.split('\n');
@@ -29,57 +39,41 @@ class Log {
    * 各メソッドの最初に記入してください。
    */
   fe(){
-    if (this.console == undefined) return;
+    if (this.console == undefined || this._outputFlag == false) return;
     // 引数なしの場合、ファイル名＋関数名を自動出力
     console.groupEnd();
-    /*
-    let e = new Error();
-    let stack = e.stack;
-    let stackArray = stack.split('\n');
-    let lines = stackArray[2].split(' ');
-    console.debug(lines[5] + ' end');
-    */
   }
   
   // for infomation
   i(msg){
     this.count++;
-    if (this.console != undefined) {
-      console.info(msg);
-    }
+    if (this.console == undefined || this._outputFlag == false) return;
+    console.info(msg);
   }
 
   // for debug
   d(msg){
     this.count++;
-    if (this.console != undefined) {
-      console.debug(msg);
-    }
+    if (this.console == undefined || this._outputFlag == false) return;
+    console.debug(msg);
   }
   
   // for warnings
   w(msg){
     this.count++;
-    if (this.console != undefined) {
-      console.warn(msg);
-    }
-    
+    if (this.console == undefined || this._outputFlag == false) return;
+    console.warn(msg);
   }
   // for error
   e(msg){
     this.count++;
-    if (this.console != undefined) {
-      console.error(msg);
-    }
+    if (this.console == undefined || this._outputFlag == false) return;
+    console.error(msg);
   }
   
-
 }
 
-// ログ出力しない場合 
-let log = new Log();
-// ログを出力する場合
-//let log = new Log(console);
+let log = new Log(console);
 
 export default log;
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 // ログ
 import log from './Log.jsx';
+log.outputFlag = true; // ログ出力する設定
 
 /**
  * アプリの起動クラス
@@ -47,6 +48,7 @@ class App extends React.Component{
     log.fb();
     
     this.onResize();
+    // ウィンドウサイズ変更イベントのキャッチする
     window.addEventListener('resize', this.onResize);
     
     log.fe();
@@ -54,9 +56,8 @@ class App extends React.Component{
 
   componentWillUnmount() {
     log.fb();
-    
+    // ウィンドウサイズ変更イベントのリスナーを解除する
     window.removeEventListener('resize', this.onResize);
-    
     log.fe();
   }
   
@@ -72,12 +73,13 @@ class App extends React.Component{
           if (app != undefined) this.app = app; 
         }}>
         <div style={{border:'solid 1px'}}>
-          ほげほげ
+          test test 
         </div>
       </div>
       );
   }
 }
+
 
 let app = <App />;
 

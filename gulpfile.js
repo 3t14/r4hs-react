@@ -25,11 +25,9 @@ gulp.task('watch', function() {
   gulp.watch('jsx/*.jsx', ['react']);  
 });
 
-
 gulp.task('default', ['react', 'watch']);
 
-
-// ビルド短縮用
+// ビルド時間短縮用タスク
 gulp.task('react-fast', function() {
   browserify({
     entries: ["./jsx/App.jsx"], 
